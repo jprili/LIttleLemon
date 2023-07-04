@@ -10,12 +10,13 @@ import androidx.navigation.compose.composable
 fun Navigation(context: Context, navController: NavHostController) {
     val startDestination: String
     val sharedPrefs = context.getSharedPreferences(
-        "Little Lemon",
+        "littleLemon",
         Context.MODE_PRIVATE
     )
+    val isRegistered: Boolean = sharedPrefs.getBoolean("isRegistered", false)
 
     startDestination =
-        if (sharedPrefs.getBoolean("isRegistered", false)) {
+        if (isRegistered) {
             Home.route
         } else {
             Onboarding.route
@@ -34,7 +35,7 @@ fun Navigation(context: Context, navController: NavHostController) {
         }
         
         composable(Profile.route) {
-            Profile(navController = navController)
+            Profile(context, navController = navController)
         }
     }
 }
