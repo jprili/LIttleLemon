@@ -2,6 +2,7 @@ package com.example.littlelemon
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -30,7 +31,7 @@ import androidx.navigation.NavController
 
 @Composable
 fun Onboarding(context: Context, navController: NavController) {
-    val txt: String = "Let's get to know you"
+    val txt = "Let's get to know you"
     val sharedPrefs : SharedPreferences = context.getSharedPreferences(
         "littleLemon", Context.MODE_PRIVATE
     )
@@ -103,7 +104,36 @@ fun Onboarding(context: Context, navController: NavController) {
         }
         
         Button(
-            onClick = {},
+            onClick = {
+                      if (isFormValid(firstName, lastName, email)) {
+                          sharedPrefs
+                              .edit()
+                              .putBoolean("isRegistered", true)
+                              .putString("firstName", firstName)
+                              .putString("lastName", lastName)
+                              .putString("email", email)
+                              .apply()
+
+                          Toast.makeText(
+                              context,
+                              "Registration Successful!",
+                              Toast.LENGTH_SHORT
+                          ).show()
+
+                          navController.navigate(Home.route) {
+                              popUpTo(Onboarding.route) {
+                                  inclusive = true
+                              }
+                              launchSingleTop = true
+                          }
+                      } else {
+                          Toast.makeText(
+                              context,
+                              "Invalid Details, please try again.",
+                              Toast.LENGTH_SHORT
+                          ).show()
+                      }
+            },
             colors = ButtonDefaults.buttonColors(Color(0xFFF4C314)),
             modifier = Modifier
                 .fillMaxWidth()
@@ -138,6 +168,11 @@ fun FormItem(txt: String, value: String, onValueChange: (String) -> Unit) {
                 .fillMaxWidth()
         )
     }
+}
+
+fun isFormValid(firstName: String, lastName: String, email: String): Boolean {
+    val formData: List<String> = listOf(firstName, lastName, email)
+    return !( formData.any { it.isEmpty() } ) // return true if any of the list is not empty
 }
 
 
