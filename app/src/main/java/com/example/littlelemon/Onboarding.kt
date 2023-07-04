@@ -157,8 +157,7 @@ fun FormItem(txt: String, value: String, onValueChange: (String) -> Unit) {
             ) {
         Text(
             text = txt,
-            fontSize = 14.sp,
-            modifier = Modifier
+            fontSize = 14.sp
         )
         TextField(
             value = value,
