@@ -9,6 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +23,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Onboarding()
+                    val navController: NavHostController = rememberNavController()
+
+                    Navigation(
+                        context = this,
+                        navController = navController
+                    )
                 }
             }
         }
@@ -32,6 +39,5 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     LittleLemonTheme {
-        Onboarding()
     }
 }
