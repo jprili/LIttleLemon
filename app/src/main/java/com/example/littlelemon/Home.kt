@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -87,37 +89,49 @@ fun Hero(context: Context) {
     var searchPhrase by remember {
         mutableStateOf("")
     }
-
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .background(Color(0xFF495E57))
-            .padding(horizontal = 20.dp, vertical = 10.dp)
+            .padding(bottom = 20.dp)
     ) {
-        Text(
-            text = context.resources.getString(R.string.rest_name),
-            fontFamily = FontFamily(Font(R.font.markazi_text_regular)),
-            fontSize = 48.sp,
-            color = Color(0xFFF4C314)
-        )
-        Text(
-            text = context.resources.getString(R.string.rest_city),
-            fontFamily = FontFamily(Font(R.font.markazi_text_regular)),
-            fontSize = 32.sp,
-            color = Color.White
-        )
-        Row(Modifier.fillMaxWidth(),
+        Row(
+            Modifier
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                text = context.resources.getString(R.string.rest_desc),
-                modifier = Modifier.fillMaxWidth(0.7f),
-                color = Color(0xFFEDEFEE)
-            )
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(10.dp)
+            ) {
+                Text(
+                    text = context.resources.getString(R.string.rest_name),
+                    fontFamily = FontFamily(Font(R.font.markazi_text_regular)),
+                    fontSize = 32.sp,
+                    color = Color(0xFFF4C314)
+                )
+                Text(
+                    text = context.resources.getString(R.string.rest_city),
+                    fontFamily = FontFamily(Font(R.font.markazi_text_regular)),
+                    fontSize = 28.sp,
+                    color = Color.White
+                )
+
+                Text(
+                    text = context.resources.getString(R.string.rest_desc),
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    color = Color(0xFFEDEFEE)
+                )
+            }
+
             Image(
                 painter = painterResource(id = R.drawable.hero_image),
                 contentDescription = "Hero Image",
                 modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp)
+                    .padding(10.dp)
+                    .clip(
+                        RoundedCornerShape(16.dp)
                     )
             )
         }
@@ -133,9 +147,14 @@ fun Hero(context: Context) {
                 search(searchPhrase)
             },
             placeholder = {
-                Text(text = "Enter Search Phrase")
+                Text(text = "Search Menu")
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
+                .clip(
+                    RoundedCornerShape(16.dp)
+                )
         )
     }
 }
