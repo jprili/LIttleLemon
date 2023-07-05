@@ -2,6 +2,7 @@ package com.example.littlelemon
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,10 @@ class MenuViewModel(appCtx: Application) : AndroidViewModel(appCtx) {
         ).build()
     }
 
+    fun getMenuItems() : LiveData<List<MenuItemRoom>> {
+        return menuDatabase.menuItemDao().getAll()
+    }
+
     fun refreshMenu() {
         viewModelScope.launch(Dispatchers.IO) {
             if (menuDatabase.menuItemDao().isEmpty()) {
@@ -26,7 +31,10 @@ class MenuViewModel(appCtx: Application) : AndroidViewModel(appCtx) {
         }
     }
 
-    fun saveToDatabase(menuItemNetwork: List<MenuItemNetwork>, menuDatabase: MenuDatabase) {
+    private fun saveToDatabase(
+        menuItemNetwork: List<MenuItemNetwork>,
+        menuDatabase: MenuDatabase
+    ) {
         val room : List<MenuItemRoom> = menuItemNetwork.map {
             it.toMenuItemRoom()
         }

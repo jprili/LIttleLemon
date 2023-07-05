@@ -15,7 +15,7 @@ class Network {
             "Working-With-Data-API/main/menu.json"
 
 
-    val httpClient: HttpClient = HttpClient(Android) {
+    private val httpClient: HttpClient = HttpClient(Android) {
         install(ContentNegotiation) {
             json(contentType = ContentType("text", "plain"))
         }
