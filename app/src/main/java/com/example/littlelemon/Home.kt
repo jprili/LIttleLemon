@@ -30,17 +30,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun Home(context: Context, navController: NavController) {
-    Header(navController)
-    Hero(context = context)
+    Column {
+        Header(navController)
+        Hero(context = context)
+    }
 }
 
 @Composable
@@ -90,10 +95,14 @@ fun Hero(context: Context) {
     ) {
         Text(
             text = context.resources.getString(R.string.rest_name),
+            fontFamily = FontFamily(Font(R.font.markazi_text_regular)),
+            fontSize = 48.sp,
             color = Color(0xFFF4C314)
         )
         Text(
             text = context.resources.getString(R.string.rest_city),
+            fontFamily = FontFamily(Font(R.font.markazi_text_regular)),
+            fontSize = 32.sp,
             color = Color.White
         )
         Row(Modifier.fillMaxWidth(),
@@ -101,7 +110,8 @@ fun Hero(context: Context) {
             horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
                 text = context.resources.getString(R.string.rest_desc),
-                modifier = Modifier.fillMaxWidth(0.7f)
+                modifier = Modifier.fillMaxWidth(0.7f),
+                color = Color(0xFFEDEFEE)
             )
             Image(
                 painter = painterResource(id = R.drawable.hero_image),
